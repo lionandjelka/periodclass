@@ -8,7 +8,7 @@ from .utils import *
 #from .outputs import *
 from .data_loader import DataLoader
 
-from .dataloader import DataLoader
+
 from .initializer import initialize_data_loader
 
 __all__ = ['DataLoader', 'initialize_data_loader']
