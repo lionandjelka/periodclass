@@ -1,4 +1,4 @@
-from .dataloader import DataLoader
+from .data_loader import DataLoader
 
 def initialize_data_loader(path_source, path_obj):
     global shared_data_loader
