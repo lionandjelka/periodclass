@@ -9,6 +9,6 @@ from .utils import *
 from .data_loader import DataLoader
 
 
-from .initializer import initialize_data_loader
+#from .initializer import initialize_data_loader
 
-__all__ = ['DataLoader', 'initialize_data_loader']
+__all__ = ['DataLoader']#, 'initialize_data_loader']
