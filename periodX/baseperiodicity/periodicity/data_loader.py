@@ -1,5 +1,4 @@
 import pandas as pd
-
 from multiprocessing import Manager
 
 class DataLoader:
@@ -24,7 +23,7 @@ class DataLoader:
         self.shared_data['object_df_path'] = self.path_obj
     
     def get_loaded_data(self):
-        # Load the actual data (fs_df, object_df, td_objects) when needed
+        # Load the actual data (fs_df, object_df, td_objects, fs_gp) when needed
         fs_df_path = self.shared_data['fs_df_path']
         fs_df = pd.read_parquet(fs_df_path)
         
@@ -34,7 +33,9 @@ class DataLoader:
         lc_cols = [col for col in object_df.columns if 'Periodic' in col]
         td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
         
-        return fs_df, object_df, td_objects
+        fs_gp = self.shared_data['fs_gp']
+        
+        return fs_df, object_df, td_objects, fs_gp
 
 #if __name__ == '__main__':
 #    manager = Manager()
@@ -45,8 +46,8 @@ class DataLoader:
 #    loader.load_fs_gp()
 #    loader.load_object_df()
     
-    # Access the loaded DataFrames using the get_loaded_data method
-#    fs_df, object_df, td_objects = loader.get_loaded_data()
+    # Access the loaded DataFrames and fs_gp using the get_loaded_data method
+#    fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
     
-    # Use fs_df, object_df, td_objects in other classes/functions as needed
+    # Use fs_df, object_df, td_objects, fs_gp in other classes/functions as needed
 
