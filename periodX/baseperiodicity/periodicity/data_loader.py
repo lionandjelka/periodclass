@@ -24,16 +24,16 @@ class DataLoader:
     
     def get_loaded_data(self):
         # Load the actual data (fs_df, object_df, td_objects, fs_gp) when needed
-        fs_df_path = self.shared_data['fs_df_path']
+        fs_df_path = self.shared_data.get('fs_df_path')
         fs_df = pd.read_parquet(fs_df_path)
         
-        object_df_path = self.shared_data['object_df_path']
+        object_df_path = self.shared_data.get('object_df_path')
         object_df = pd.read_parquet(object_df_path)
         
         lc_cols = [col for col in object_df.columns if 'Periodic' in col]
         td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
         
-        fs_gp = self.shared_data['fs_gp']
+        fs_gp = self.shared_data.get('fs_gp')
         
         return fs_df, object_df, td_objects, fs_gp
 
