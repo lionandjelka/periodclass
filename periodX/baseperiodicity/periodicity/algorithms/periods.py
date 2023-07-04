@@ -10,83 +10,6 @@ from sklearn.utils import shuffle
 from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 
-# Global variable
-#shared_data_loader = None
-
-#global fs_gp, fs_df, object_df, td_objects
-#fs_gp = None
-#fs_df = None
-#object_df = None
-#td_objects = None
-
-#def loadfsdf(path_source):
-#    global fs_df
-    # Loading will take some time ...
-#    fs_df = pd.read_parquet(path_source)
-#    return fs_df
-
-#def load_fsgp():
-#    global fs_gp, fs_df
-    # groupby forcedsource table by objectid
-#    fs_gp = fs_df.groupby('objectId')
-#    return fs_gp
-
-#def load_objectdf(path_obj):
-#    global object_df,fs_df, td_objects
-#    object_df=pd.read_parquet(path_obj)
-    # select the objects that have time domain data
-#    lc_cols = [col for col in object_df.columns if 'Periodic' in col]
-#    td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
-#    print("Data loaded and processed successfully.")
- #   return td_objects
-from multiprocessing import Manager
-
-class DataLoader:
-    def __init__(self, path_source, path_obj, shared_data):
-        self.path_source = path_source
-        self.path_obj = path_obj
-        self.shared_data = shared_data
-    
-    def load_fs_df(self):
-        # Set the file path for fs_df in the shared_data
-        self.shared_data['fs_df_path'] = self.path_source
-    
-    def load_fs_gp(self):
-        # Load fs_df from the file path and create fs_gp
-        fs_df_path = self.shared_data['fs_df_path']
-        fs_df = pd.read_parquet(fs_df_path)
-        fs_gp = fs_df.groupby('objectId')
-        self.shared_data['fs_gp'] = fs_gp
-    
-    def load_object_df(self):
-        # Set the file path for object_df and td_objects in the shared_data
-        self.shared_data['object_df_path'] = self.path_obj
-    
-    def get_loaded_data(self):
-        # Load the actual data (fs_df, object_df, td_objects) when needed
-        fs_df_path = self.shared_data['fs_df_path']
-        fs_df = pd.read_parquet(fs_df_path)
-        
-        object_df_path = self.shared_data['object_df_path']
-        object_df = pd.read_parquet(object_df_path)
-        
-        lc_cols = [col for col in object_df.columns if 'Periodic' in col]
-        td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
-        
-        return fs_df, object_df, td_objects
-
-#if __name__ == '__main__':
-#    manager = Manager()
-#    shared_data = manager.dict()
-    
-#    loader = DataLoader('path/to/source', 'path/to/objects', shared_data)
-#    loader.load_fs_df()
-#    loader.load_fs_gp()
-#    loader.load_object_df()
-    
-    # Access the loaded DataFrames using the get_loaded_data method
-#    fs_df, object_df, td_objects = loader.get_loaded_data()
-
 
 
 
@@ -94,9 +17,8 @@ class DataLoader:
 ###get QSO which have u,g,r,i, light curves >=100 points
 
 def get_qso(set11):
-    sett = []
-    global shared_data_loader
-    fs_gp = shared_data_loader.fs_gp
+    global fs_gp 
+    sett = []    
     for set1 in range(len(set11)):
         demo_lc = fs_gp.get_group(str(set11[set1]))
         d0 = demo_lc[demo_lc['filter'] == 1].sort_values(by=['mjd']).dropna()
