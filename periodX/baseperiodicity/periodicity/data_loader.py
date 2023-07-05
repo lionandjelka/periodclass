@@ -36,19 +36,7 @@ class DataLoader:
         
         return fs_df, object_df, td_objects, fs_gp
     
-    def get_qso(self, set11):
-        sett = []
-        fs_gp = self.shared_data['fs_gp']
-        for set1 in range(len(set11)):
-            demo_lc = fs_gp.get_group(str(set11[set1]))
-            d0 = demo_lc[demo_lc['filter'] == 1].sort_values(by=['mjd']).dropna()
-            d1 = demo_lc[demo_lc['filter'] == 2].sort_values(by=['mjd']).dropna()
-            d2 = demo_lc[demo_lc['filter'] == 3].sort_values(by=['mjd']).dropna()
-            d3 = demo_lc[demo_lc['filter'] == 4].sort_values(by=['mjd']).dropna()
-            d4 = demo_lc[demo_lc['filter'] == 5].sort_values(by=['mjd']).dropna()
-            if (len(d0) >= 100) and (len(d1) >= 100) and (len(d2) > 100) and (len(d3) >= 100):
-                sett.append(str(set11[set1]))
-        return sett
+
 
 #if __name__ == '__main__':
 #    manager = Manager()
