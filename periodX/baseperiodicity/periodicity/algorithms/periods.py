@@ -81,7 +81,7 @@ def outliers(time,flux):
   return cleaned_time, cleaned_mag#,clean_err
 
 def get_lc22(set1):
-    global shared_data_loader
+    global fs_gp  # Declare fs_gp as a global variable
     fs_gp = shared_data_loader.fs_gp
     demo_lc = fs_gp.get_group(set1)
     d0 = demo_lc[(demo_lc['filter'] == 1) ].sort_values(by=['mjd']).dropna()
