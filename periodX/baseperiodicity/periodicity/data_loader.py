@@ -40,15 +40,21 @@ class DataLoader:
         
         return self.fs_df, self.object_df, td_objects, self.fs_gp
 
-# Function to load the data and assign it to the global variables
-def load_data(path_source, path_obj, shared_data):
-    global fs_df, object_df, fs_gp, td_objects
-    
-    loader = DataLoader(path_source, path_obj, shared_data)
-    loader.load_fs_df()
-    loader.load_fs_gp()
-    loader.load_object_df()
-    
+def load_data():
+    # Load the data
     fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
+    
+    # Assign the loaded data to the global variables
+    globals()['fs_df'] = fs_df
+    globals()['object_df'] = object_df
+    globals()['td_objects'] = td_objects
+    globals()['fs_gp'] = fs_gp
+    
+    # Assign fs_df, fs_gp, object_df, and td_objects as global variables
+    global fs_df, fs_gp, object_df, td_objects
+    fs_df = globals()['fs_df']
+    fs_gp = globals()['fs_gp']
+    object_df = globals()['object_df']
+    td_objects = globals()['td_objects']
 
 
