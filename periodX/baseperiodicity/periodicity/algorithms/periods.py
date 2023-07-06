@@ -17,10 +17,7 @@ from periodicity.algorithms.wavelets import *
 
 def get_qso(set11):
 # Access the global variables
-    fs_df = globals().get('fs_df')
-    object_df = globals().get('object_df')
-    td_objects = globals().get('td_objects')
-    fs_gp = globals().get('fs_gp')
+    global fs_gp 
 
     sett = []    
     for set1 in range(len(set11)):
