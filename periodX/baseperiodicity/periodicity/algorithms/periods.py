@@ -9,7 +9,7 @@ from scipy.stats.mstats import mquantiles
 from sklearn.utils import shuffle
 from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
-
+from periodicity.data_loader import DataLoader
 
 
 
