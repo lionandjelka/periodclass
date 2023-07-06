@@ -16,6 +16,7 @@ class DataLoader:
         self.fs_gp = None
         self.fs_df = None
         self.object_df = None
+        self.td_objects = None
     
     def load_fs_df(self):
         # Set the file path for fs_df in the shared_data
@@ -41,7 +42,7 @@ class DataLoader:
         self.object_df = pd.read_parquet(object_df_path)
         
         lc_cols = [col for col in self.object_df.columns if 'Periodic' in col]
-        td_objects = self.object_df.dropna(subset=lc_cols, how='all').copy()
+        self.td_objects = self.object_df.dropna(subset=lc_cols, how='all').copy()
         
         self.fs_gp = self.fs_df.groupby(self.shared_data['fs_df_groupby_column'])
         
@@ -50,9 +51,9 @@ class DataLoader:
         fs_gp = self.fs_gp
         fs_df = self.fs_df
         object_df = self.object_df
-        td_objects = td_objects
+        td_objects = self.td_objects
         
-        return self.fs_df, self.object_df, td_objects, self.fs_gp
+        return self.fs_df, self.object_df, self.td_objects, self.fs_gp
 
 # Function to load the data and assign it to the global variables
 def load_data(path_source, path_obj, shared_data):
