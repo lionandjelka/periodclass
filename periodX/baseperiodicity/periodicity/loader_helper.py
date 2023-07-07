@@ -2,7 +2,7 @@ from multiprocessing import Manager
 from periodicity.data_loader import DataLoader
 
 def load_and_get_data(path_source, path_obj):
-
+    global fs_df, object_df, td_objects, fs_gp 
   # Create a shared dictionary using Manager
     manager = Manager()
     shared_data = manager.dict()
