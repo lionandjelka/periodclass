@@ -7,21 +7,17 @@ class DataLoader:
         self.path_source = path_source
         self.path_obj = path_obj
         self.shared_data = shared_data
-        self.fs_gp = None
-        self.fs_df = None
-        self.object_df = None
-        self.td_objects = None
     
     def load_fs_df(self):
         # Set the file path for fs_df in the shared_data
         self.shared_data['fs_df_path'] = self.path_source
     
     def load_fs_gp(self):
-        # Load fs_df from the file path and store the necessary information for fs_gp
+        # Load fs_df from the file path and create fs_gp
         fs_df_path = self.shared_data['fs_df_path']
-        self.fs_df = pd.read_parquet(fs_df_path)
-        self.shared_data['fs_df_groupby_column'] = 'objectId'
-        self.fs_gp = self.fs_df.groupby(self.shared_data['fs_df_groupby_column'])
+        fs_df = pd.read_parquet(fs_df_path)
+        fs_gp = fs_df.groupby('objectId')
+        self.shared_data['fs_gp'] = fs_gp
     
     def load_object_df(self):
         # Set the file path for object_df and td_objects in the shared_data
@@ -30,15 +26,17 @@ class DataLoader:
     def get_loaded_data(self):
         # Load the actual data (fs_df, object_df, td_objects, fs_gp) when needed
         fs_df_path = self.shared_data['fs_df_path']
-        self.fs_df = pd.read_parquet(fs_df_path)
+        fs_df = pd.read_parquet(fs_df_path)
         
         object_df_path = self.shared_data['object_df_path']
-        self.object_df = pd.read_parquet(object_df_path)
+        object_df = pd.read_parquet(object_df_path)
         
-        lc_cols = [col for col in self.object_df.columns if 'Periodic' in col]
-        self.td_objects = self.object_df.dropna(subset=lc_cols, how='all').copy()
+        lc_cols = [col for col in object_df.columns if 'Periodic' in col]
+        td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
         
-        self.fs_gp = self.fs_df.groupby(self.shared_data['fs_df_groupby_column'])
+        fs_gp = self.shared_data['fs_gp']
+        
+        return fs_df, object_df, td_objects, fs_gp
 
 def load_data(path_source, path_obj, shared_data):
     loader = DataLoader(path_source, path_obj, shared_data)
@@ -47,14 +45,9 @@ def load_data(path_source, path_obj, shared_data):
     loader.load_object_df()
     
     # Assign the loaded data to the global variables in globalss module
-    globalss.fs_gp = loader.fs_gp
-    globalss.fs_df = loader.fs_df
-    globalss.object_df = loader.object_df
-    globalss.td_objects = loader.td_objects
-    
-    # Return the loaded data
-    return globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp
+    globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp = loader.get_loaded_data()
 
+    return globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp
 # Call load_data function to load the data
 #load_data(path_source, path_obj, shared_data)
 
