@@ -1,0 +1,10 @@
+setup.py
+periodicity/__init__.py
+periodicity.egg-info/PKG-INFO
+periodicity.egg-info/SOURCES.txt
+periodicity.egg-info/dependency_links.txt
+periodicity.egg-info/top_level.txt
+periodicity/algorithms/__init__.py
+periodicity/algorithms/wavelets/__init__.py
+periodicity/utils/__init__.py
+periodicity/utils/mock_lc.py
