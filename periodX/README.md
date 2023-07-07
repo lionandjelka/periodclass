@@ -1,2 +1,0 @@
-# NEWPERIODICITY
-Test notebooks
