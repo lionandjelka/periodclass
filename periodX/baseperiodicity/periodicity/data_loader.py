@@ -51,6 +51,9 @@ def load_data(path_source, path_obj, shared_data):
     globalss.fs_df = loader.fs_df
     globalss.object_df = loader.object_df
     globalss.td_objects = loader.td_objects
+    
+    # Return the loaded data
+    return globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp
 
 # Call load_data function to load the data
 #load_data(path_source, path_obj, shared_data)
