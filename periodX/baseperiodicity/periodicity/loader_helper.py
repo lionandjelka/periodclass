@@ -2,6 +2,8 @@ from multiprocessing import Manager
 from periodicity.data_loader import DataLoader
 
 def load_and_get_data(path_source, path_obj):
+  global fs_gp, fs_df, object_df, td_objects
+
     # Create a shared dictionary using Manager
     manager = Manager()
     shared_data = manager.dict()
@@ -17,5 +19,8 @@ def load_and_get_data(path_source, path_obj):
     # Access the loaded DataFrames and fs_gp using the get_loaded_data method
     fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
 
-    # Return the loaded data
-    return fs_df, object_df, td_objects, fs_gp
+    # Assign the loaded data to the global variables
+    globals()['fs_df'] = fs_df
+    globals()['object_df'] = object_df
+    globals()['td_objects'] = td_objects
+    globals()['fs_gp'] = fs_gp
