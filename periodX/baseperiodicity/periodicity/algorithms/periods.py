@@ -11,7 +11,7 @@ from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 from periodicity.data_loader import DataLoader
 
-#global fs_gp, fs_df, object_df, td_objects
+global fs_gp, fs_df, object_df, td_objects
 fs_gp = None
 fs_df = None
 object_df = None
