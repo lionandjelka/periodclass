@@ -11,16 +11,16 @@ from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 from periodicity.data_loader import DataLoader
 
-global fs_gp, fs_df, object_df, td_objects
-fs_gp = None
-fs_df = None
-object_df = None
-td_objects = None
+#global fs_gp, fs_df, object_df, td_objects
+#fs_gp = None
+#fs_df = None
+#object_df = None
+#td_objects = None
 ###get QSO which have u,g,r,i, light curves >=100 points
 
 def get_qso(set11):
 # Access the global variables
-    global fs_gp 
+    fs_gp = globals().get('fs_gp')
 
     sett = []    
     for set1 in range(len(set11)):
