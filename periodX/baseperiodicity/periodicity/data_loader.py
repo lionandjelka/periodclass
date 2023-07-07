@@ -1,12 +1,12 @@
 import pandas as pd
 from multiprocessing import Manager
-import globals
+import globalss
 
 # Define global variables
-globals.fs_gp = None
-globals.fs_df = None
-globals.object_df = None
-globals.td_objects = None
+globalss.fs_gp = None
+globalss.fs_df = None
+globalss.object_df = None
+globalss.td_objects = None
 
 class DataLoader:
     def __init__(self, path_source, path_obj, shared_data):
@@ -53,16 +53,16 @@ def load_data(path_source, path_obj, shared_data):
     loader.load_object_df()
     
     # Assign the loaded data to the global variables
-    globals.fs_gp = loader.fs_gp
-    globals.fs_df = loader.fs_df
-    globals.object_df = loader.object_df
-    globals.td_objects = loader.td_objects
+    globalss.fs_gp = loader.fs_gp
+    globalss.fs_df = loader.fs_df
+    globalss.object_df = loader.object_df
+    globalss.td_objects = loader.td_objects
 
     # Update the values of the global variables in the globals module
-    globals.fs_gp = globals.fs_gp
-    globals.fs_df = globals.fs_df
-    globals.object_df = globals.object_df
-    globals.td_objects = globals.td_objects
+    globalss.fs_gp = globals.fs_gp
+    globalss.fs_df = globals.fs_df
+    globalss.object_df = globals.object_df
+    globalss.td_objects = globals.td_objects
 
     return loader.fs_df, loader.object_df, loader.td_objects, loader.fs_gp
 
