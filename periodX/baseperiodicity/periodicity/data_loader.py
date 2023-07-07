@@ -1,12 +1,6 @@
 import pandas as pd
 from multiprocessing import Manager
-
-# Define global variables
-global fs_gp, fs_df, object_df, td_objects
-fs_gp = None
-fs_df = None
-object_df = None
-td_objects = None
+import globalss
 
 class DataLoader:
     def __init__(self, path_source, path_obj, shared_data):
@@ -45,26 +39,20 @@ class DataLoader:
         self.td_objects = self.object_df.dropna(subset=lc_cols, how='all').copy()
         
         self.fs_gp = self.fs_df.groupby(self.shared_data['fs_df_groupby_column'])
-        
-        # Assign the loaded data to the global variables
-        global fs_gp, fs_df, object_df, td_objects
-        fs_gp = self.fs_gp
-        fs_df = self.fs_df
-        object_df = self.object_df
-        td_objects = self.td_objects
-        
-        return self.fs_df, self.object_df, self.td_objects, self.fs_gp
 
-# Function to load the data and assign it to the global variables
 def load_data(path_source, path_obj, shared_data):
-    global fs_gp, fs_df, object_df, td_objects
-    
     loader = DataLoader(path_source, path_obj, shared_data)
     loader.load_fs_df()
     loader.load_fs_gp()
     loader.load_object_df()
     
-    fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
+    # Assign the loaded data to the global variables in globalss module
+    globalss.fs_gp = loader.fs_gp
+    globalss.fs_df = loader.fs_df
+    globalss.object_df = loader.object_df
+    globalss.td_objects = loader.td_objects
+
+    return globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp
 
 
 
