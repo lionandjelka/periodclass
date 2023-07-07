@@ -10,7 +10,7 @@ from sklearn.utils import shuffle
 from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 from periodicity.data_loader import DataLoader
-import globalss
+from periodicity import globalss
 ###get QSO which have u,g,r,i, light curves >=100 points
 
 def get_qso(set11):
