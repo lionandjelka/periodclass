@@ -9,8 +9,7 @@ from sklearn.utils import shuffle
 from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 from periodicity.data_loader import DataLoader
-from periodicity.loader_helper import load_and_get_data
-
+from periodicity.data_loader import fs_gp, fs_df,object_df, td_objects
 #global fs_gp, fs_df, object_df, td_objects
 #fs_gp = None
 #fs_df = None
