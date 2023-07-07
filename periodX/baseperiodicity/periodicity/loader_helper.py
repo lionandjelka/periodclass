@@ -2,11 +2,11 @@ from multiprocessing import Manager
 from periodicity.data_loader import DataLoader
 from periodicity import globalss
 
-def load_and_get_data(path_source, path_obj):
+def load_and_get_data(path_source, path_obj, shared_data):
     manager = Manager()
     shared_data = manager.dict()
     
-    loader = DataLoader('path/to/source', 'path/to/objects', shared_data)
+    loader = DataLoader(path_source, path_objects, shared_data)
     loader.load_fs_df()
     loader.load_fs_gp()
     loader.load_object_df()
