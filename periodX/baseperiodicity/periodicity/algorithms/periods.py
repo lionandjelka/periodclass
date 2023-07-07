@@ -10,21 +10,21 @@ from sklearn.utils import shuffle
 from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 from periodicity.data_loader import DataLoader
+from periodicity.loader_helper import load_and_get_data
 
-global fs_gp, fs_df, object_df, td_objects
-fs_gp = None
-fs_df = None
-object_df = None
-td_objects = None
+#global fs_gp, fs_df, object_df, td_objects
+#fs_gp = None
+#fs_df = None
+#object_df = None
+#td_objects = None
 ###get QSO which have u,g,r,i, light curves >=100 points
 
 def get_qso(set11):
-# Access the global variables
-    global fs_gp 
-
+# Access the global variables 
     sett = []    
     for set1 in range(len(set11)):
-        demo_lc = fs_gp.get_group(str(set11[set1]))
+       # demo_lc = fs_gp.get_group(str(set11[set1]))
+        demo_lc=load_and_get_data.fs_gp.get_group(str(set11[set1]))
         d0 = demo_lc[demo_lc['filter'] == 1].sort_values(by=['mjd']).dropna()
         d1 = demo_lc[demo_lc['filter'] == 2].sort_values(by=['mjd']).dropna()
         d2 = demo_lc[demo_lc['filter'] == 3].sort_values(by=['mjd']).dropna()
