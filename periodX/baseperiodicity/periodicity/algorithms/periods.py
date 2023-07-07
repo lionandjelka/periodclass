@@ -19,6 +19,7 @@ import globals
 
 def get_qso(set11):
 # Access the global variables 
+    fs_gp = globals.fs_gp
     sett = []    
     for set1 in range(len(set11)):
         demo_lc = fs_gp.get_group(str(set11[set1]))
