@@ -1,6 +1,6 @@
 import pandas as pd
 from multiprocessing import Manager
-from periodicity import import globalss
+from periodicity import globalss
 
 class DataLoader:
     def __init__(self, path_source, path_obj, shared_data):
