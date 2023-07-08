@@ -32,9 +32,9 @@ class DataLoader:
         
         return fs_df, object_df, td_objects, fs_gp
 
-def load_data(path_source, path_obj, shared_data):
+def load_data(path_source, path_obj):
     manager = Manager()
-    shared_data = manager.dict(shared_data)
+    shared_data = manager.dict()
     
     loader = DataLoader(path_source, path_obj, shared_data)
     loader.load_fs_df()
