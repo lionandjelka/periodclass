@@ -1,36 +1,35 @@
 import pandas as pd
 from multiprocessing import Manager
+from periodicity import globals
 
 class DataLoader:
     def __init__(self, path_source, path_obj, shared_data):
         self.path_source = path_source
         self.path_obj = path_obj
         self.shared_data = shared_data
-        self.fs_gp = None
-        self.fs_df = None
-        self.object_df = None
-        self.td_objects = None
     
     def load_fs_df(self):
+        # Set the file path for fs_df in the shared_data
         self.shared_data['fs_df'] = pd.read_parquet(self.path_source)
     
     def load_fs_gp(self):
+        # Load fs_df from the file path and create fs_gp
         fs_df = self.shared_data['fs_df']
-        self.fs_gp = fs_df.groupby('objectId')
-        self.shared_data['fs_gp'] = self.fs_gp
+        self.shared_data['fs_gp'] = fs_df.groupby('objectId')
     
     def load_object_df(self):
+        # Set the file path for object_df and td_objects in the shared_data
         self.shared_data['object_df'] = pd.read_parquet(self.path_obj)
     
     def get_loaded_data(self):
+        # Load the actual data (fs_df, object_df, td_objects, fs_gp) when needed
         fs_df = self.shared_data['fs_df']
         object_df = self.shared_data['object_df']
         lc_cols = [col for col in object_df.columns if 'Periodic' in col]
-        self.td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
+        td_objects = object_df.dropna(subset=lc_cols, how='all').copy()
+        fs_gp = self.shared_data['fs_gp']
         
-        self.fs_gp = self.shared_data['fs_gp']
-        
-        return fs_df, object_df, self.td_objects, self.fs_gp
+        return fs_df, object_df, td_objects, fs_gp
 
 def load_data(path_source, path_obj, shared_data):
     manager = Manager()
@@ -43,14 +42,13 @@ def load_data(path_source, path_obj, shared_data):
     
     fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
     
-    shared_data['fs_df'] = fs_df
-    shared_data['object_df'] = object_df
-    shared_data['td_objects'] = td_objects
-    shared_data['fs_gp'] = fs_gp
+    # Assign the loaded data to the global variables in the globals module
+    globals.fs_df = fs_df
+    globals.object_df = object_df
+    globals.td_objects = td_objects
+    globals.fs_gp = fs_gp
     
-    return shared_data['fs_df'], shared_data['object_df'], shared_data['td_objects'], shared_data['fs_gp']
-
-
+    return globals.fs_df, globals.object_df, globals.td_objects, globals.fs_gp
 
 
 
