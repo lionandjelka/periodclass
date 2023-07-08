@@ -44,12 +44,12 @@ def load_data(path_source, path_obj, shared_data):
     fs_df, object_df, td_objects, fs_gp = loader.get_loaded_data()
     
     # Assign the loaded data to the global variables in the globals module
-    globals.fs_df = fs_df
-    globals.object_df = object_df
-    globals.td_objects = td_objects
-    globals.fs_gp = fs_gp
+    globalss.fs_df = fs_df
+    globalss.object_df = object_df
+    globalss.td_objects = td_objects
+    globalss.fs_gp = fs_gp
     
-    return globals.fs_df, globals.object_df, globals.td_objects, globals.fs_gp
+    return globalss.fs_df, globalss.object_df, globalss.td_objects, globalss.fs_gp
 
 
 
