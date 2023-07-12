@@ -1,3 +1,13 @@
+import numpy as np
+import json
+from scipy.signal import chirp, find_peaks, peak_widths
+from traitlets.traitlets import Integer
+from scipy import interpolate, optimize
+from scipy.stats.mstats import mquantiles
+from sklearn.utils import shuffle
+from periodicity.utils.correlation import correlation_nd
+from periodicity.algorithms.wavelets import *
+
 def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 0.6, minfq = 500, maxfq = 10, algorithm ='wwz', method = 'linear'):
     """Determination of significance usign Johnson method but for Grid search of parameters
 
