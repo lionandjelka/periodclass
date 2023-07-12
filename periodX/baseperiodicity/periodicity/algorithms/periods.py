@@ -80,7 +80,7 @@ def outliers(time,flux):
   return cleaned_time, cleaned_mag#,clean_err
 
 def get_lc22(set1):
-    global fs_gp  # Declare fs_gp as a global variable
+     fs_gp = globalss.fs_gp # Declare fs_gp as a global variable
    
     demo_lc = fs_gp.get_group(set1)
     d0 = demo_lc[(demo_lc['filter'] == 1) ].sort_values(by=['mjd']).dropna()
@@ -183,8 +183,7 @@ def same_periods(r_periods0,r_periods1,up0,low0, up1,low1,peaks0,hh0,tt0,yy0, pe
 
     return np.array(r_periods), np.array(up),np.array(low), np.array(sig)
 def process1(set1):
-    global shared_data_loader
-    fs_gp = shared_data_loader.fs_gp
+    fs_gp = globalss.fs_gp
     det_periods=[]
     tt0,yy0, tt1,yy1,tt2,yy2,tt3,yy3,sampling0,sampling1,sampling2,sampling3=get_lc22(set1)
     wwz_matrx0,  corr0, extent0 = hybrid2d(tt0, yy0, 80, 800, minfq=2000., maxfq=10.)
