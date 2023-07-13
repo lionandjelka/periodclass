@@ -47,10 +47,10 @@ def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 
     # Finding peaks
     peaks,_ = find_peaks(yax, peakHeight, prominence = 0.7)
     
-    if peak > len(peaks):
-        return None
+    #if peak > len(peaks):
+    #    return None
     
-    idxrep=peaks[peak]
+    idxrep=peak
     #peak power larger than red noise peak power
     count=0.
     #peak power of red noise larger than observed peak power
