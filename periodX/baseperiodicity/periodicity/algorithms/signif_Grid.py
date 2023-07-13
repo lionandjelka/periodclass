@@ -35,7 +35,7 @@ def peak_interp(corr,  minfq = 500, maxfq = 10):
     for v in xax:
         yax.append(float(f(v)))
     yax = np.array(yax)
-return yax
+    return yax
 
 def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 0.6, minfq = 500, maxfq = 10, algorithm ='wwz', method = 'linear'):
     """Determination of significance usign Johnson method but for Grid search of parameters
