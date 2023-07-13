@@ -25,6 +25,7 @@ def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 
         peakHeight: max peak height,
         algorithm: wwz or superlets (for now)
     """
+    
     hh1=np.rot90(corr).T/np.rot90(corr).T.max()
     hh1arr=np.rot90(hh1.T)
     hh1arr1=np.abs(hh1arr).sum(1)/np.abs(hh1arr).sum(1).max()
