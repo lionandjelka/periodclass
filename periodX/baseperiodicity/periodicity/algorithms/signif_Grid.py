@@ -9,7 +9,7 @@ from periodicity.utils.correlation import correlation_nd
 from periodicity.algorithms.wavelets import *
 
 
-def peak_interp(corr,  minfq = 500, maxfq = 10):
+def peak_interp(corr, ngrid,  minfq = 500, maxfq = 10):
     """Interpolation of the peak
         Parameters
         ----------
@@ -78,7 +78,7 @@ def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 
     
     #if peak > len(peaks):
     #    return None
-    hh1arr1=peak_interp(corr,  minfq = 500, maxfq = 10)
+    hh1arr1=peak_interp(corr,ngrid,  minfq = 500, maxfq = 10)
     idxrep=peak
     #peak power larger than red noise peak power
     count=0.
@@ -102,7 +102,7 @@ def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 
         #hhx=np.rot90(corr1x).T/corr1x.max()
         #hh1x=np.rot90(hhx.T)
         #hh1xarr=np.abs(hh1x).sum(1)/np.abs(hh1x).sum(1).max()
-        hh1xarr=hh1arr1=peak_interp(corr1x,  minfq = 500, maxfq = 10)
+        hh1xarr=hh1arr1=peak_interp(corr1x, ngrid, minfq = 500, maxfq = 10)
         bins.append(hh1xarr[idxrep])
         if ((hh1arr1[idxrep]/hh1xarr[idxrep])>1.):
             count=count+1.
