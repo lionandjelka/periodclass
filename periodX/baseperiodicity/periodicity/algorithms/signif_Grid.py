@@ -29,7 +29,23 @@ def signifGrid_john(numlc, peak, corr,  tt, yy, ntau,ngrid, f = 2, peakHeight = 
     hh1=np.rot90(corr).T/np.rot90(corr).T.max()
     hh1arr=np.rot90(hh1.T)
     hh1arr1=np.abs(hh1arr).sum(1)/np.abs(hh1arr).sum(1).max()
-    peaks,_ = find_peaks(hh1arr1,peakHeight, prominence = 0.7)
+
+    fmin =1/minfq
+    fmax = 1/maxfq
+    df = (fmax - fmin) / ngrid
+    
+    # osax interpolation (stacked data of h2d along one axis) to obtain more points
+    osax=np.arange(start=fmin,stop=fmax+df,step=df)
+    xax =np.arange(start=fmin, stop = fmax + df, step = df/2)
+    f = interpolate.interp1d(osax, np.abs(hh1arr1), fill_value="extrapolate")
+    yax = []
+    for v in xax:
+        yax.append(float(f(v)))
+    yax = np.array(yax)
+    
+    
+    # Finding peaks
+    peaks,_ = find_peaks(yax, peakHeight, prominence = 0.7)
     
     if peak > len(peaks):
         return None
